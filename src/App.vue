@@ -3,7 +3,7 @@
     <h1>Countries</h1>
     <div class="main-container">
       <countries-dropdown v-bind:countries='countries'></countries-dropdown>
-      <countries-list v-bind:countries='countries'></countries-list>
+      <!-- <countries-list v-bind:countries='countries'></countries-list> -->
       <country-detail :country='selectedCountry'></country-detail>
     </div>
   </div>
@@ -41,7 +41,7 @@ export default {
     this.fetchCountries();
     // console.log(this.countries);
     eventBus.$on('country-selected', (country) => {
-      // console.log('within $on', country);
+      console.log('within $on', country);
       this.selectedCountry = country;
     });
 },
