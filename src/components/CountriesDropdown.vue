@@ -16,6 +16,11 @@ import { eventBus } from '../main.js'
 
 export default {
   name: 'countries-dropdown',
+  data(){
+    return {
+      selected: null
+    };
+  },
   props: ['countries'],
   methods: {
   handleChange: function(){
