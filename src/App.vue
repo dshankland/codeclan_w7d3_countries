@@ -1,28 +1,59 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<template lang="html">
+  <div>
+    <h1>Countries</h1>
+    <div class="main-container">
+      <countries-list v-bind:countries='countries'></countries-list>
+      <country-detail :country='selectedCountry'></country-detail>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CountriesList from './components/CountriesList.vue';
+import CountryDetail from './components/CountryDetail.vue';
+import { eventBus } from './main.js'
 
 export default {
   name: 'app',
+  data(){
+    return {
+      countries: [],
+      selectedCountry: null
+    };
+  },
+  methods: {
+    fetchCountries: function(){
+      // request is a promise object
+      fetch("https://restcountries.eu/rest/v2/all")
+      .then(response => response.json())
+      .then((data) => {
+        // console.log(data);
+        this.countries = data;
+        // console.log(this.countries);
+        // any subsequent dependant functions has to happen here
+      });
+    },
+  },
+  mounted(){
+    // console.log('loaded');
+    this.fetchCountries();
+    console.log(this.countries);
+    eventBus.$on('country-selected', (country) => {
+      // console.log('within $on', munro);
+      this.selectedCountry = country;
+    });
+},
   components: {
-    HelloWorld
+    'countries-list': CountriesList,
+    'country-detail': CountryDetail
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="css" scoped>
+.main-container {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
+
