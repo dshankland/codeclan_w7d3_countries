@@ -41,7 +41,7 @@ export default {
     this.fetchCountries();
     // console.log(this.countries);
     eventBus.$on('country-selected', (country) => {
-      console.log('within $on', country);
+      // console.log('within $on', country);
       this.selectedCountry = country;
     });
 },

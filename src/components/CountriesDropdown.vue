@@ -24,7 +24,7 @@ export default {
   props: ['countries'],
   methods: {
   handleChange: function(){
-    console.log(this.selected);
+    // console.log(this.selected);
     eventBus.$emit('country-selected', this.selected)
   }
 }
