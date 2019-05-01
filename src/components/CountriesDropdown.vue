@@ -7,6 +7,11 @@
       <option v-for="(country, index) in countries" v-bind:value="country" >{{ country.name }}</option>
     </select>
       <!-- <countries-list-item v-for="(country, index) in countries" :country="country" :key="index">{{country.name}}</countries-list-item> -->
+
+      <div class="search-wrapper">
+        <input class="search" type="text" name="search" v-model="search" placeholder="Search countries...">
+      </div>
+
   </div>
 
 </template>
@@ -18,7 +23,8 @@ export default {
   name: 'countries-dropdown',
   data(){
     return {
-      selected: null
+      selected: null,
+      search: ""
     };
   },
   props: ['countries'],
@@ -27,6 +33,13 @@ export default {
     // console.log(this.selected);
     eventBus.$emit('country-selected', this.selected)
   }
+},
+computed: {
+  searchedCountries: function () {
+    this.selected = this.countries.filter((country) => {
+      return country.name.match(this.search);
+    });
+  },
 }
 }
 </script>
